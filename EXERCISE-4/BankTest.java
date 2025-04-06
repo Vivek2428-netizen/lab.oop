@@ -1,49 +1,42 @@
+package Encapsulation;
+
 class BankAccount {
-    String accountHolder;
-    double balance;
+    private String accountHolder;
+    private double balance;
 
-    BankAccount(String name, double balance) {
+    public void setAccountHolder(String name) {
         this.accountHolder = name;
-        this.balance = balance;
     }
 
-    void calculateInterest() {
-        System.out.println("Generic account: No specific interest calculation.");
-    }
-}
-
-class SavingsAccount extends BankAccount {
-
-    SavingsAccount(String name, double balance) {
-        super(name, balance);
+    public String getAccountHolder() {
+        return accountHolder;
     }
 
-    @Override
-    void calculateInterest() {
-        double interest = balance * 0.04;
-        System.out.println("Savings Account Interest for " + accountHolder + ": ₹" + interest);
-    }
-}
-
-class FixedDepositAccount extends BankAccount {
-
-    FixedDepositAccount(String name, double balance) {
-        super(name, balance);
+    public double getBalance() {
+        return balance;
     }
 
-    @Override
-    void calculateInterest() {
-        double interest = balance * 0.07;
-        System.out.println("Fixed Deposit Interest for " + accountHolder + ": ₹" + interest);
+    public void deposit(double amount) {
+        if (amount > 0)
+            balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance)
+            balance -= amount;
+        else
+            System.out.println("Insufficient funds or invalid amount.");
     }
 }
 
 public class BankTest {
     public static void main(String[] args) {
-        BankAccount acc1 = new SavingsAccount("Sheshank", 10000);
-        BankAccount acc2 = new FixedDepositAccount("Sheshank", 20000);
+        BankAccount acc = new BankAccount();
+        acc.setAccountHolder("Sheshank");
+        acc.deposit(5000);
+        acc.withdraw(1500);
 
-        acc1.calculateInterest();
-        acc2.calculateInterest();
+        System.out.println("Account Holder: " + acc.getAccountHolder());
+        System.out.println("Balance: ₹" + acc.getBalance());
     }
 }
